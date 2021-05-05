@@ -41,22 +41,63 @@ namespace EmailSlicer
 
             string checkEmailDomain(string email)
             {
-                //Split the mail into an array
+                //Split the mail into an array of char
+                char[] emailToArray = email.ToCharArray();
+
+                char[] domain = new char[10];
+
+                int start = 0;
 
                 //Find and return position of @
 
+                var index = Array.FindIndex(emailToArray, x => x == '@');
+
                 //Return all the char between the @ and a . to a new array
+
+                for (int i = index + 1; i < emailToArray.Length; i++)
+                {
+                  
+                    if (emailToArray[i] == '.')
+                    {
+                        break;
+                    }
+
+                    domain[start] = emailToArray[i];
+
+                    start++;
+
+                }
+
+                string domainName = String.Join("", domain);
 
                 //Create a string from the array
 
+                return domainName;
+
             }
                 
+            string checkForKnownDomains(string domain)
+            {
+                switch (domain)
+                {
+                    case "gmail":
+                    case "hotmail":
+                    case "yahoo":
+                    case "aol":
+                    case "msn":
+                    case "wanadoo":
+                    case "orange":
+                        return $"{ domain} is a popular domain";
+                    default:
+                        return $"{domain} is a custom domain";
+                }
+            }
 
             // Execution
 
             askForEmail();
 
-            Console.WriteLine($"{usersEmail}");
+            Console.WriteLine(checkForKnownDomains(checkEmailDomain(usersEmail)));
         }
     }
 }

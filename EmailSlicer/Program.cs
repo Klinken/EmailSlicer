@@ -38,6 +38,20 @@ namespace EmailSlicer
 
             // Check users email for custom or popular domain
 
+
+            string checkEmailDomain(string email)
+            {
+                //Split the mail into an array
+
+                //Find and return position of @
+
+                //Return all the char between the @ and a . to a new array
+
+                //Create a string from the array
+
+            }
+                
+
             // Execution
 
             askForEmail();

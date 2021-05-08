@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace EmailSlicer
@@ -15,7 +16,7 @@ namespace EmailSlicer
 
                 // Ask for users email and store it
 
-            string askForEmail()
+            string getEmail()
             {
                 // Make sure its an email
                 Regex regex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
@@ -28,7 +29,7 @@ namespace EmailSlicer
                 {
                     Console.WriteLine("There seems to be a problem with your email, please try again.");
 
-                    return askForEmail();
+                    return getEmail();
 
                 }
 
@@ -39,18 +40,16 @@ namespace EmailSlicer
             // Check users email for custom or popular domain
 
 
-            string checkEmailDomain(string email)
+            string getDomain(string email)
             {
                 //Split the mail into an array of char
                 char[] emailToArray = email.ToCharArray();
 
-                char[] domain = new char[10];
-
-                int start = 0;
+                List<char> domain = new List<char>();
 
                 //Find and return position of @
 
-                var index = Array.FindIndex(emailToArray, x => x == '@');
+                int index = Array.FindIndex(emailToArray, x => x == '@');
 
                 //Return all the char between the @ and a . to a new array
 
@@ -62,13 +61,11 @@ namespace EmailSlicer
                         break;
                     }
 
-                    domain[start] = emailToArray[i];
-
-                    start++;
+                    domain.Add(emailToArray[i]);
 
                 }
 
-                string domainName = String.Join("", domain);
+                string domainName = String.Join("", domain.ToArray());
 
                 //Create a string from the array
 
@@ -76,7 +73,7 @@ namespace EmailSlicer
 
             }
                 
-            string checkForKnownDomains(string domain)
+            string checkDomain(string domain)
             {
                 switch (domain)
                 {
@@ -87,7 +84,7 @@ namespace EmailSlicer
                     case "msn":
                     case "wanadoo":
                     case "orange":
-                        return $"{ domain} is a popular domain";
+                        return $"{domain} is a popular domain";
                     default:
                         return $"{domain} is a custom domain";
                 }
@@ -95,9 +92,10 @@ namespace EmailSlicer
 
             // Execution
 
-            askForEmail();
+            getEmail();
 
-            Console.WriteLine(checkForKnownDomains(checkEmailDomain(usersEmail)));
+            Console.WriteLine(getDomain(usersEmail));
+
         }
     }
 }

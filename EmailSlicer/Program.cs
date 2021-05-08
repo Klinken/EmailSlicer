@@ -8,10 +8,6 @@ namespace EmailSlicer
     {
         static void Main(string[] args)
         {
-            // Variables
-
-            string usersEmail;
-
             // Methods
 
                 // Ask for users email and store it
@@ -21,19 +17,25 @@ namespace EmailSlicer
                 // Make sure its an email
                 Regex regex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
 
+                Console.Write("Please enter your email: ");
                 string email = Console.ReadLine();
 
 
 
                 if (!regex.IsMatch(email))
                 {
-                    Console.WriteLine("There seems to be a problem with your email, please try again.");
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    Console.WriteLine("There seems to be a problem with the format of your email, please try again.\n");
+
+                    Console.ResetColor();
 
                     return getEmail();
 
                 }
 
-                return usersEmail = email;
+                return email;
 
             }
 
@@ -94,13 +96,12 @@ namespace EmailSlicer
                 }
 
                 return $"{domain} is a {(isPopularDomain == true ? "popular" : "custom")} domain!";
+
             }
 
             // Execution
 
-            getEmail();
-
-            Console.WriteLine(checkDomain(getDomain(usersEmail)));
+            Console.WriteLine(checkDomain(getDomain(getEmail())));
 
         }
     }

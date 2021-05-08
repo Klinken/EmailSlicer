@@ -8,9 +8,8 @@ namespace EmailSlicer
     {
         static void Main(string[] args)
         {
-            // Methods
-
-                // Ask for users email and store it
+            
+            // Ask for users email and store it
 
             string getEmail()
             {
@@ -39,9 +38,6 @@ namespace EmailSlicer
 
             }
 
-            // Check users email for custom or popular domain
-
-
             string getDomain(string email)
             {
                 //Split the mail into an array of char
@@ -57,7 +53,7 @@ namespace EmailSlicer
 
                 for (int i = index; i < emailToArray.Length; i++)
                 {
-                  
+
                     if (emailToArray[i] == '.')
                     {
                         break;
@@ -74,7 +70,9 @@ namespace EmailSlicer
                 return domainName;
 
             }
-                
+
+            // Check users email for custom or popular domain
+
             string checkDomain(string domain)
             {
                 bool isPopularDomain;
@@ -95,13 +93,18 @@ namespace EmailSlicer
                         break;
                 }
 
-                return $"{domain} is a {(isPopularDomain == true ? "popular" : "custom")} domain!";
+                return $"\n{domain.ToUpper()} is a {(isPopularDomain == true ? "popular" : "custom")} domain!";
 
             }
 
             // Execution
 
-            Console.WriteLine(checkDomain(getDomain(getEmail())));
+            Console.WriteLine(
+                checkDomain(
+                    getDomain(
+                        getEmail()
+                         )));
+
 
         }
     }

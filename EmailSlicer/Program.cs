@@ -49,11 +49,11 @@ namespace EmailSlicer
 
                 //Find and return position of @
 
-                int index = Array.FindIndex(emailToArray, x => x == '@');
+                int index = Array.FindIndex(emailToArray, x => x == '@') + 1;
 
                 //Return all the char between the @ and a . to a new array
 
-                for (int i = index + 1; i < emailToArray.Length; i++)
+                for (int i = index; i < emailToArray.Length; i++)
                 {
                   
                     if (emailToArray[i] == '.')
@@ -75,6 +75,8 @@ namespace EmailSlicer
                 
             string checkDomain(string domain)
             {
+                bool isPopularDomain;
+
                 switch (domain)
                 {
                     case "gmail":
@@ -84,17 +86,21 @@ namespace EmailSlicer
                     case "msn":
                     case "wanadoo":
                     case "orange":
-                        return $"{domain} is a popular domain";
+                        isPopularDomain = true;
+                        break;
                     default:
-                        return $"{domain} is a custom domain";
+                        isPopularDomain = false;
+                        break;
                 }
+
+                return $"{domain} is a {(isPopularDomain == true ? "popular" : "custom")} domain!";
             }
 
             // Execution
 
             getEmail();
 
-            Console.WriteLine(getDomain(usersEmail));
+            Console.WriteLine(checkDomain(getDomain(usersEmail)));
 
         }
     }
